@@ -29,11 +29,13 @@ async function loadLocation() {
 
 // build url
 function buildURL(lat, lng, key){
-  return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${key}&units=metric`
+  return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${key}&units=metric`;
+  
 }
 
 function buildSearchURL(city, key){
   return `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`
+  //return `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`
 }
 
 // error handling
@@ -65,7 +67,6 @@ async function getData(url) {
   }
 }
 
-
 // COMPONENTS
 const app = document.querySelector('#app');
 
@@ -73,8 +74,7 @@ const app = document.querySelector('#app');
 
 // search form
 function createSearchForm() {
-  const container = document.createElement('div');
-  container.setAttribute('class', 'search')
+  const container = createDiv('search');
 
   const inputField = document.createElement('input');
   inputField.setAttribute('class', 'search__input')
@@ -97,21 +97,73 @@ function createSearchForm() {
 // create ui with city weather
 function createMainUI(data) {
   const main = document.getElementById('main');
-  main.innerHTML = ""
+  main.innerHTML = "";
+  
   const dataFromObject = {
-    description: data.weather[1].description,
-    icon: data.weather[1].icon,
-    mainTemp: data.main.temp + "°C",
-    feels: data.main.feels_like + "°C",
-    minTemp: data.main.temp_min + "°C",
-    maxTemp: data.main.temp_max + "°C",
+    description: data.weather[0].description,
+    icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+    mainTemp: parseInt(data.main.temp).toFixed(1) + "°C",
+    feels: parseInt(data.main.feels_like).toFixed(1) + "°C",
+    minTemp: parseInt(data.main.temp_min).toFixed(1) + "°C",
+    maxTemp:  parseInt(data.main.temp_max).toFixed(1) + "°C",
     humidity: data.main.humidity  + "%",
     country: data.sys.country,
     city: data.name,
     localHours: new Date(data.dt*1000).getHours(),
     minutes: new Date(data.dt*1000).getMinutes(),
   }
-  console.table(dataFromObject)
+  main.appendChild(createPar('city', `${dataFromObject.city}, ${dataFromObject.country}`))
+  main.appendChild(mainTemp(
+    dataFromObject.icon,
+    dataFromObject.mainTemp,
+    dataFromObject.feels,
+    dataFromObject.minTemp,
+    dataFromObject.maxTemp,
+    dataFromObject.description,
+  ))
+}
+
+// functions for main div display
+
+function createDiv(style, text) {
+  const div = document.createElement('div')
+  div.classList.add(style)
+  return div;
+}
+
+function createPar(style, text) {
+  const p = document.createElement('p');
+  p.classList.add(style);
+  p.innerText = text;
+  return p;
+}
+
+function createImg(url){
+  const img = document.createElement('img');
+  img.src = url;
+  img.alt = ""
+  return img;
+}
+
+
+function mainTemp(icon, temp, feels, max, min, description) {
+
+  const display = createDiv('display_temp');
+  const img = createDiv('icon');
+  img.appendChild(createImg(icon))
+
+  const temperatures = createDiv('actual');
+  temperatures.appendChild(createPar('actual_main', temp))
+  temperatures.appendChild(createPar('actual_feels',`Feels ${feels}`))
+  
+  const highAndLow = createDiv('temps');
+  highAndLow.appendChild(createPar('temps', `H:${max} / L:${min}`))
+
+  display.appendChild(img)
+  display.appendChild(temperatures)
+  display.appendChild(highAndLow)
+  display.appendChild(createPar('description', description.toUpperCase()))
+  return display;
 }
 
 // create main div to display weather or error message
@@ -139,7 +191,7 @@ function createMainDiv() {
  * "dt":1690448765,
  * "sys":{"type":2,"id":2037828,"country":"RO","sunrise":1690426583,"sunset":1690480052},
  * "timezone":10800,"id":683506,"name":"Bucharest","cod":200} */
-
+//createheader();
 createSearchForm();
 createMainDiv();
 loadLocation();
