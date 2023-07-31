@@ -1,0 +1,9 @@
+@import url(https://fonts.googleapis.com/css2?family=Varela+Round&display=swap);
+h1 {
+  color: white;
+  background-color: black;
+}
+*{margin:0;padding:0;box-sizing:border-box}h1{color:#fff;background-color:#000}body{background:#0F2027;background:-webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);background:linear-gradient(to right, #2C5364, #203A43, #0F2027);color:#fff}#app{margin:0 auto;width:90%;max-width:400px;text-align:center;padding:2rem}.search input,.search button{padding:0.5rem;border-radius:5px;outline:none;border:none;margin-right:.5rem}.display_temp{font-family:'Varela Round', sans-serif;display:grid;grid-template-columns:1fr 1.4fr 0.6fr;grid-template-rows:1fr .2fr .2fr;gap:0px 0px}.city{grid-area:1 / 1 / 2 / 4}.icon{grid-area:1 / 1 / 2 / 2}.actual{align-self:center;grid-area:1 / 2 / 2 / 4}.temps{justify-self:center;align-self:center;grid-area:2 / 1 / 3 / 4}.description{justify-self:center;align-self:center;grid-area:3 / 1 / 4 / 4}.city{margin-top:2rem;font-family:'Varela Round', sans-serif;font-size:1.5rem}.icon{width:150px;height:150px}.actual_main{font-size:3rem}
+
+
+/*# sourceMappingURL=main.css.map*/
