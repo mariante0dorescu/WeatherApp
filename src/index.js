@@ -2,6 +2,7 @@ import "./styles.css";
 import "./styles.scss";
 import {apiKey} from "./api_key.js"
 
+
 // FUNCTIONS
 // get lat and long
 async function loadLocation() {
@@ -101,7 +102,8 @@ function createMainUI(data) {
   
   const dataFromObject = {
     description: data.weather[0].description,
-    icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+    //icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+    icon: `./images/${data.weather[0].icon}.svg`,
     mainTemp: parseInt(data.main.temp).toFixed(1) + "°C",
     feels: parseInt(data.main.feels_like).toFixed(1) + "°C",
     minTemp: parseInt(data.main.temp_min).toFixed(1) + "°C",
@@ -142,6 +144,7 @@ function createImg(url){
   const img = document.createElement('img');
   img.src = url;
   img.alt = ""
+  img.classList.add('svg')
   return img;
 }
 
@@ -178,19 +181,6 @@ function createMainDiv() {
 // show data
 // graph???
 
-/** {"coord":{"lon":26.1063,"lat":44.4323},
- * "weather":[
- *    {"id":200,"main":"Thunderstorm","description":"thunderstorm with light rain","icon":"11d"},
- *    {"id":501,"main":"Rain","description":"moderate rain","icon":"10d"}],
- * "base":"stations",
- * "main":{"temp":22.91,"feels_like":23.06,"temp_min":21.01,"temp_max":24.44,"pressure":1004,"humidity":69},
- * "visibility":10000,
- * "wind":{"speed":5.66,"deg":10},
- * "rain":{"1h":1.19},
- * "clouds":{"all":40},
- * "dt":1690448765,
- * "sys":{"type":2,"id":2037828,"country":"RO","sunrise":1690426583,"sunset":1690480052},
- * "timezone":10800,"id":683506,"name":"Bucharest","cod":200} */
 //createheader();
 createSearchForm();
 createMainDiv();
